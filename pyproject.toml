@@ -1,0 +1,33 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "visual-catalog"
+version = "0.1.0"
+description = "Distilled visual catalog engine: product photo tagging and text search"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "torch",
+    "torchvision",
+    "open_clip_torch",
+    "numpy",
+    "pandas",
+    "pyarrow",
+    "scikit-learn",
+    "pyyaml",
+    "pillow",
+    "tqdm",
+    "sqlite-vec",
+]
+
+[project.optional-dependencies]
+app = ["gradio"]
+dev = ["pytest"]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
