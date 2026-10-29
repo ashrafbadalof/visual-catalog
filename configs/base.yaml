@@ -1,0 +1,15 @@
+seed: 42
+data_root: data
+
+paths:
+  styles_csv: styles.csv
+  images_dir: images_256
+  processed_dir: processed
+
+labels:
+  column: articleType
+  min_images: 100
+
+splits:
+  val: 0.05
+  test: 0.15
