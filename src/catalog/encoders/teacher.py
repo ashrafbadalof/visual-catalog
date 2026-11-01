@@ -14,7 +14,7 @@ class ClipTeacher(Encoder):
 
         self.logit_scale = model.logit_scale.exp().item()
         self.model = model.to(self.device, dtype=self.dtype).eval()
-        self.preprocess = self.preprocess
+        self.preprocess = preprocess
         self.tokenizer = open_clip.get_tokenizer(arch)
         self.name = f"{arch}/{pretrained}"
         self.class_embs = self._class_embeddings(class_names, prompts)
