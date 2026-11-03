@@ -18,14 +18,14 @@ def load_styles(csv_path, images_dir):
     return df[has_image].reset_index(drop=True)
 
 
-def choose_classes(df, column, min_images):
-    counts = df[column].value_counts()
+def choose_classes(df, column, min_images, merge=None):
+    df = df.copy()
+    df["label"] = df[column].replace(merge or {})
+    counts = df["label"].value_counts()
     keep = counts[counts >= min_images].index
     coverage = counts[keep].sum() / len(df)
     print(f"Kept {len(keep)} of {len(counts)} classes, covering {coverage:.1%} of images")
-    df = df[df[column].isin(keep)].copy()
-    df["label"] = df[column]
-    return df
+    return df[df["label"].isin(keep)]
 
 def make_splits(df, val_frac, test_frac, seed):
     rest, test = train_test_split(
@@ -49,7 +49,8 @@ def run(cfg):
     out_dir.mkdir(parents=True, exist_ok=True)
 
     df = load_styles(data_path(cfg, "styles_csv"), images_dir)
-    df = choose_classes(df, cfg["labels"]["column"], cfg["labels"]["min_images"])
+    df = choose_classes(df, cfg["labels"]["column"], cfg["labels"]["min_images"],
+                    cfg["labels"].get("merge"))
     df = make_splits(df, cfg["splits"]["val"], cfg["splits"]["test"], cfg["seed"])
 
     df[KEEP_COLUMNS].to_parquet(out_dir / "splits.parquet", index=False)

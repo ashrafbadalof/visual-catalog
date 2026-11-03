@@ -20,6 +20,10 @@ teacher:
 labels:
   column: articleType
   min_images: 100
+  merge:
+    Kurtis: Kurtas
+    Tunics: Kurtas
+    Flats: Sandals
 
 splits:
   val: 0.05

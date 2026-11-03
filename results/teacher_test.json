@@ -1,0 +1,120 @@
+{
+  "teacher": "ViT-L-14/laion2b_s32b_b82k",
+  "prompts": [
+    "a photo of a {}.",
+    "a product photo of a {}.",
+    "a studio photo of a {}, isolated on a white background."
+  ],
+  "split": "test",
+  "classification": {
+    "n": 6322,
+    "top1": 0.8570072761784245,
+    "top5": 0.9971527997469155,
+    "macro_f1": 0.8605074904548496,
+    "ece": 0.050934786205048876
+  },
+  "top_confusions": [
+    {
+      "true": "Heels",
+      "predicted": "Sandals",
+      "count": 118,
+      "share_of_true": 0.592964824120603
+    },
+    {
+      "true": "Casual Shoes",
+      "predicted": "Sports Shoes",
+      "count": 102,
+      "share_of_true": 0.2388758782201405
+    },
+    {
+      "true": "Tshirts",
+      "predicted": "Tops",
+      "count": 88,
+      "share_of_true": 0.0830188679245283
+    },
+    {
+      "true": "Tshirts",
+      "predicted": "Shirts",
+      "count": 56,
+      "share_of_true": 0.052830188679245285
+    },
+    {
+      "true": "Wallets",
+      "predicted": "Clutches",
+      "count": 55,
+      "share_of_true": 0.39285714285714285
+    },
+    {
+      "true": "Shirts",
+      "predicted": "Kurtas",
+      "count": 34,
+      "share_of_true": 0.07053941908713693
+    },
+    {
+      "true": "Tops",
+      "predicted": "Tshirts",
+      "count": 27,
+      "share_of_true": 0.10227272727272728
+    },
+    {
+      "true": "Tops",
+      "predicted": "Kurtas",
+      "count": 25,
+      "share_of_true": 0.0946969696969697
+    },
+    {
+      "true": "Casual Shoes",
+      "predicted": "Formal Shoes",
+      "count": 25,
+      "share_of_true": 0.0585480093676815
+    },
+    {
+      "true": "Shirts",
+      "predicted": "Tops",
+      "count": 22,
+      "share_of_true": 0.04564315352697095
+    },
+    {
+      "true": "Tshirts",
+      "predicted": "Innerwear Vests",
+      "count": 22,
+      "share_of_true": 0.020754716981132074
+    },
+    {
+      "true": "Sandals",
+      "predicted": "Heels",
+      "count": 20,
+      "share_of_true": 0.09523809523809523
+    },
+    {
+      "true": "Kurtas",
+      "predicted": "Nightdress",
+      "count": 20,
+      "share_of_true": 0.057803468208092484
+    },
+    {
+      "true": "Shorts",
+      "predicted": "Capris",
+      "count": 14,
+      "share_of_true": 0.17073170731707318
+    },
+    {
+      "true": "Sandals",
+      "predicted": "Casual Shoes",
+      "count": 14,
+      "share_of_true": 0.06666666666666667
+    }
+  ],
+  "retrieval": {
+    "n_queries": 6322,
+    "gallery_size": 6322,
+    "exact_recall@1": 0.2764947801328693,
+    "exact_recall@5": 0.5654856058209428,
+    "exact_recall@10": 0.6988294843403986,
+    "exact_mrr": 0.4126149394758738,
+    "title_recall@1": 0.31556469471686177,
+    "title_recall@5": 0.6156279658335969,
+    "title_recall@10": 0.7413793103448276,
+    "title_mrr": 0.4548033107515167
+  }
+}

@@ -8,24 +8,12 @@
   "split": "val",
   "classification": {
     "n": 2108,
-    "top1": 0.790796963946869,
-    "top5": 0.9871916508538899,
-    "macro_f1": 0.8015511626427033,
-    "ece": 0.10363984208349034
+    "top1": 0.8581593927893738,
+    "top5": 0.9976280834914611,
+    "macro_f1": 0.8487813947252811,
+    "ece": 0.054190854448294926
   },
   "top_confusions": [
-    {
-      "true": "Kurtas",
-      "predicted": "Kurtis",
-      "count": 89,
-      "share_of_true": 0.967391304347826
-    },
-    {
-      "true": "Heels",
-      "predicted": "Sandals",
-      "count": 50,
-      "share_of_true": 0.7575757575757576
-    },
     {
       "true": "Casual Shoes",
       "predicted": "Sports Shoes",
@@ -33,46 +21,40 @@
       "share_of_true": 0.2746478873239437
     },
     {
-      "true": "Tops",
-      "predicted": "Kurtis",
-      "count": 31,
-      "share_of_true": 0.3522727272727273
+      "true": "Heels",
+      "predicted": "Sandals",
+      "count": 36,
+      "share_of_true": 0.5454545454545454
     },
     {
       "true": "Tshirts",
       "predicted": "Tops",
-      "count": 26,
-      "share_of_true": 0.07365439093484419
-    },
-    {
-      "true": "Flats",
-      "predicted": "Sandals",
-      "count": 19,
-      "share_of_true": 0.76
+      "count": 31,
+      "share_of_true": 0.08757062146892655
     },
     {
       "true": "Wallets",
       "predicted": "Clutches",
-      "count": 17,
-      "share_of_true": 0.3617021276595745
+      "count": 22,
+      "share_of_true": 0.46808510638297873
     },
     {
       "true": "Tshirts",
       "predicted": "Shirts",
-      "count": 14,
-      "share_of_true": 0.039660056657223795
+      "count": 17,
+      "share_of_true": 0.0480225988700565
     },
     {
       "true": "Shirts",
       "predicted": "Kurtas",
-      "count": 11,
-      "share_of_true": 0.06832298136645963
+      "count": 14,
+      "share_of_true": 0.08695652173913043
     },
     {
-      "true": "Tunics",
-      "predicted": "Kurtis",
+      "true": "Sandals",
+      "predicted": "Heels",
       "count": 10,
-      "share_of_true": 0.8333333333333334
+      "share_of_true": 0.14285714285714285
     },
     {
       "true": "Tops",
@@ -81,28 +63,46 @@
       "share_of_true": 0.11363636363636363
     },
     {
-      "true": "Casual Shoes",
-      "predicted": "Flats",
-      "count": 9,
-      "share_of_true": 0.06338028169014084
+      "true": "Tops",
+      "predicted": "Kurtas",
+      "count": 8,
+      "share_of_true": 0.09090909090909091
     },
     {
-      "true": "Shirts",
-      "predicted": "Tops",
+      "true": "Kurtas",
+      "predicted": "Nightdress",
       "count": 8,
-      "share_of_true": 0.049689440993788817
+      "share_of_true": 0.06956521739130435
     },
     {
       "true": "Casual Shoes",
       "predicted": "Formal Shoes",
-      "count": 7,
-      "share_of_true": 0.04929577464788732
+      "count": 6,
+      "share_of_true": 0.04225352112676056
+    },
+    {
+      "true": "Dresses",
+      "predicted": "Nightdress",
+      "count": 5,
+      "share_of_true": 0.21739130434782608
+    },
+    {
+      "true": "Sports Shoes",
+      "predicted": "Casual Shoes",
+      "count": 5,
+      "share_of_true": 0.049019607843137254
     },
     {
       "true": "Tshirts",
-      "predicted": "Kurtis",
-      "count": 6,
-      "share_of_true": 0.0169971671388102
+      "predicted": "Innerwear Vests",
+      "count": 5,
+      "share_of_true": 0.014124293785310734
+    },
+    {
+      "true": "Shirts",
+      "predicted": "Tops",
+      "count": 4,
+      "share_of_true": 0.024844720496894408
     }
   ]
 }
