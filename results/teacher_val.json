@@ -1,0 +1,108 @@
+{
+  "teacher": "ViT-L-14/laion2b_s32b_b82k",
+  "prompts": [
+    "a photo of a {}.",
+    "a product photo of a {}.",
+    "a studio photo of a {}, isolated on a white background."
+  ],
+  "split": "val",
+  "classification": {
+    "n": 2108,
+    "top1": 0.790796963946869,
+    "top5": 0.9871916508538899,
+    "macro_f1": 0.8015511626427033,
+    "ece": 0.10363984208349034
+  },
+  "top_confusions": [
+    {
+      "true": "Kurtas",
+      "predicted": "Kurtis",
+      "count": 89,
+      "share_of_true": 0.967391304347826
+    },
+    {
+      "true": "Heels",
+      "predicted": "Sandals",
+      "count": 50,
+      "share_of_true": 0.7575757575757576
+    },
+    {
+      "true": "Casual Shoes",
+      "predicted": "Sports Shoes",
+      "count": 39,
+      "share_of_true": 0.2746478873239437
+    },
+    {
+      "true": "Tops",
+      "predicted": "Kurtis",
+      "count": 31,
+      "share_of_true": 0.3522727272727273
+    },
+    {
+      "true": "Tshirts",
+      "predicted": "Tops",
+      "count": 26,
+      "share_of_true": 0.07365439093484419
+    },
+    {
+      "true": "Flats",
+      "predicted": "Sandals",
+      "count": 19,
+      "share_of_true": 0.76
+    },
+    {
+      "true": "Wallets",
+      "predicted": "Clutches",
+      "count": 17,
+      "share_of_true": 0.3617021276595745
+    },
+    {
+      "true": "Tshirts",
+      "predicted": "Shirts",
+      "count": 14,
+      "share_of_true": 0.039660056657223795
+    },
+    {
+      "true": "Shirts",
+      "predicted": "Kurtas",
+      "count": 11,
+      "share_of_true": 0.06832298136645963
+    },
+    {
+      "true": "Tunics",
+      "predicted": "Kurtis",
+      "count": 10,
+      "share_of_true": 0.8333333333333334
+    },
+    {
+      "true": "Tops",
+      "predicted": "Tshirts",
+      "count": 10,
+      "share_of_true": 0.11363636363636363
+    },
+    {
+      "true": "Casual Shoes",
+      "predicted": "Flats",
+      "count": 9,
+      "share_of_true": 0.06338028169014084
+    },
+    {
+      "true": "Shirts",
+      "predicted": "Tops",
+      "count": 8,
+      "share_of_true": 0.049689440993788817
+    },
+    {
+      "true": "Casual Shoes",
+      "predicted": "Formal Shoes",
+      "count": 7,
+      "share_of_true": 0.04929577464788732
+    },
+    {
+      "true": "Tshirts",
+      "predicted": "Kurtis",
+      "count": 6,
+      "share_of_true": 0.0169971671388102
+    }
+  ]
+}
