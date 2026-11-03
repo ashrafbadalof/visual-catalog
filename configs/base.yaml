@@ -6,6 +6,7 @@ paths:
   images_dir: images_256
   processed_dir: processed
   cache_dir: cache/teacher
+  catalog_db: catalog.db
 
 teacher:
   arch: ViT-L-14
