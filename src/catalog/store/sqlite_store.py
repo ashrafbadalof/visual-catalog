@@ -61,5 +61,8 @@ class SQLiteStore:
     def count(self):
         return self.db.execute("SELECT COUNT(*) FROM products").fetchone()[0]
 
+    def next_id(self):
+        return self.db.execute("SELECT COALESCE(MAX(id), 0) + 1 FROM products").fetchone()[0]
+
     def close(self):
         self.db.close()

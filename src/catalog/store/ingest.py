@@ -23,7 +23,7 @@ def run(cfg):
     embs /= np.linalg.norm(embs, axis=1, keepdims=True)
     probs = softmax(np.load(cache / "logits.npy")[test])
 
-    products = [Product(id=int(r.id), image_path=r.path, title=r.productDisplayName,
+    products = [Product(id=int(r.id), image_path=f"{cfg['paths']['images_dir']}/{r.path}", title=r.productDisplayName,
                         category=meta["classes"][p.argmax()], confidence=float(p.max()),
                         encoder=meta["teacher"])
                 for r, p in zip(rows.itertuples(), probs)]
