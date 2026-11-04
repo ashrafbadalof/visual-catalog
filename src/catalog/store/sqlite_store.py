@@ -19,7 +19,7 @@ class SQLiteStore:
         self.db.row_factory = sqlite3.Row
         self.db.enable_load_extension(True)
         sqlite_vec.load(self.db)
-        self.db.load_extension(False)
+        self.db.enable_load_extension(False)
         self.db.execute("""CREATE TABLE IF NOT EXISTS products (
             id INTEGER PRIMARY KEY, image_path TEXT NOT NULL, title TEXT, 
             category TEXT NOT NULL, confidence REAL NOT NULL, encoder TEXT NOT NULL)""")
@@ -27,11 +27,13 @@ class SQLiteStore:
             USING vec0(embedding float[{dim}], category text)""")
 
     def add(self, products, embeddings):
+        embeddings = np.asarray(embeddings, dtype=np.float32)
+        embeddings = embeddings / np.linalg.norm(embeddings, axis=1, keepdims=True)
         with self.db:
             for p, e in zip(products, np.asarray(embeddings, dtype=np.float32)):
                 self.db.execute("INSERT INTO products VALUES (?,?,?,?,?,?)",
                                 (int(p.id), p.image_path, p.title, p.category, float(p.confidence), p.encoder))
-                self.db.execute("INSERT INTO product_vectors (rowid, embeddings, category) VALUES (?, ?, ?)", 
+                self.db.execute("INSERT INTO product_vectors (rowid, embedding, category) VALUES (?, ?, ?)", 
                                 (int(p.id), e.tobytes(), p.category))
     
     def get(self, product_id):
@@ -46,8 +48,10 @@ class SQLiteStore:
         return cur.rowcount > 0
 
     def search(self, query_emb, k=10, category=None):
+        q = np.asarray(query_emb, dtype=np.float32)
+        q = q / np.linalg.norm(q)
         sql = "SELECT rowid, distance FROM product_vectors WHERE embedding MATCH ? AND k = ?"
-        params = [np.asarray(query_emb, dtype=np.float32).tobytes(), k]
+        params = [q.tobytes(), k]
         if category:
             sql += " AND category = ?"
             params.append(category)
