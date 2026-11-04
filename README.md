@@ -13,6 +13,8 @@ Evaluated on the held-out test split (human labels, 6,322 images).
 | Text→image MRR (exact) | 0.413 |
 | Text→image Recall@10 (same-title match) | 74.1% |
 | Speed (RTX 3050 laptop, batch 32) | 17.6 img/s (57 ms/image) |
+| Tagging latency (CPU, single image) | ≈ 1.24 s |
+| Search latency (CPU, text tower + database) | ≈ 210 ms |
 
 Prompt names and class merges (Kurtis/Tunics → Kurtas, Flats → Sandals)
 were tuned on the validation split only. Full results in `results/`.

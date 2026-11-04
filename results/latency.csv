@@ -1,0 +1,13 @@
+kind,encoder,device,ms
+query,ViT-L-14/laion2b_s32b_b82k,cpu,217.8
+query,ViT-L-14/laion2b_s32b_b82k,cpu,278.4
+query,ViT-L-14/laion2b_s32b_b82k,cpu,232.1
+query,ViT-L-14/laion2b_s32b_b82k,cpu,210.0
+query,ViT-L-14/laion2b_s32b_b82k,cpu,206.2
+query,ViT-L-14/laion2b_s32b_b82k,cpu,207.1
+tag,ViT-L-14/laion2b_s32b_b82k,cpu,1179.9
+tag,ViT-L-14/laion2b_s32b_b82k,cpu,1332.3
+tag,ViT-L-14/laion2b_s32b_b82k,cpu,1214.3
+tag,ViT-L-14/laion2b_s32b_b82k,cpu,1305.7
+tag,ViT-L-14/laion2b_s32b_b82k,cpu,1266.0
+tag,ViT-L-14/laion2b_s32b_b82k,cpu,1212.1
