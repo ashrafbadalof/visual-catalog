@@ -20,6 +20,15 @@ def agreement(net, loader, device):
         sims.append(F.cosine_similarity(out.float(), target.to(device)).cpu())
     return torch.cat(sims).mean().item()
 
+def relational_loss(student, teacher, tau):
+    s = F.normalize(student, dim=-1)
+    t = F.normalize(teacher, dim=-1)
+    self_pairs = torch.eye(len(s), dtype=torch.bool, device=s.device)
+    s_sim = (s @ s.T / tau).masked_fill(self_pairs, -1e4)
+    t_sim = (t @ t.T / tau).masked_fill(self_pairs, -1e4)
+    return F.kl_div(F.log_softmax(s_sim, dim=-1), F.softmax(t_sim, dim=-1),
+                    reduction="batchmean")
+
 def run(cfg):
     s = cfg["student"]
     cache = data_path(cfg, "cache_dir")
@@ -58,7 +67,10 @@ def run(cfg):
             images, target = images.to(device), target.to(device)
             with torch.autocast("cuda", dtype=torch.float16):
                 out = net(images)
-            loss = 1 - F.cosine_similarity(out.float(), target).mean()
+            out = out.float()
+            loss = 1 - F.cosine_similarity(out, target).mean()
+            if s.get("rel_weight", 0) > 0:
+                loss = loss + s["rel_weight"] * relational_loss(out, target, s["rel_tau"])
             opt.zero_grad()
             scaler.scale(loss).backward()
             scaler.step(opt)

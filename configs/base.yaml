@@ -20,12 +20,14 @@ teacher:
     - "a studio photo of a {}, isolated on a white background."
 
 student:
-  run_name: mnv3s_cos_e20
+  run_name: mnv3s_rel_e20
   arch: mobilenet_v3_small
   epochs: 20
   batch_size: 32
   lr: 3.0e-4
   num_workers: 4
+  rel_weight: 1.0
+  rel_tau: 0.1
 
 labels:
   column: articleType
