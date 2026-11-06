@@ -1,0 +1,26 @@
+{
+  "run_name": "mnv3l_cos_e20",
+  "student": "student/mobilenet_v3_large",
+  "params_millions": 5.19,
+  "agreement_with_teacher": 0.9057314395904541,
+  "classification": {
+    "n": 6322,
+    "top1": 0.8528946535906359,
+    "top5": 0.9969946219550775,
+    "macro_f1": 0.8402210052609121,
+    "ece": 0.05926608543151242
+  },
+  "retrieval": {
+    "n_queries": 6322,
+    "gallery_size": 6322,
+    "exact_recall@1": 0.18000632711167353,
+    "exact_recall@5": 0.45824106295476114,
+    "exact_recall@10": 0.6110408098702942,
+    "exact_mrr": 0.31674845600435186,
+    "title_recall@1": 0.21195824106295477,
+    "title_recall@5": 0.505694400506169,
+    "title_recall@10": 0.658335969629864,
+    "title_mrr": 0.3534754606040323
+  },
+  "cpu_ms_per_image": 19.66175000416115
+}
