@@ -48,6 +48,7 @@ def run(cfg):
 
     ckpt_dir = data_path(cfg, "checkpoints_dir")
     ckpt_dir.mkdir(parents=True, exist_ok=True)
+    ckpt_path = ckpt_dir / f"{s['run_name']}.pt"
     best = -1.0
 
     for epoch in range(s["epochs"]):
@@ -70,6 +71,5 @@ def run(cfg):
         if val_cos > best:
             best = val_cos
             torch.save({"arch": s["arch"], "dim": targets.shape[1],
-                        "state_dict": net.state_dict(), "val_cosine": val_cos},
-                       ckpt_dir / f"{s['arch']}.pt")
-    print(f"Best val cosine {best:.4f} → {ckpt_dir / (s['arch'] + '.pt')}")
+                        "state_dict": net.state_dict(), "val_cosine": val_cos}, ckpt_path)  
+    print(f"Best val cosine {best:.4f} → {ckpt_path}")

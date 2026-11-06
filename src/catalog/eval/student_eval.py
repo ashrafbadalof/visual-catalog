@@ -26,11 +26,11 @@ def cpu_latency_ms(encoder, files, warmup=5):
 
 
 def run(cfg):
-    arch = cfg["student"]["arch"]
     cache = data_path(cfg, "cache_dir")
     processed = data_path(cfg, "processed_dir")
     images_dir = data_path(cfg, "images_dir")
-    checkpoint = data_path(cfg, "checkpoints_dir") / f"{arch}.pt"
+    run_name = cfg["student"]["run_name"]
+    checkpoint = data_path(cfg, "checkpoints_dir") / f"{run_name}.pt"
 
     df = pd.read_parquet(processed / "splits.parquet")
     meta = json.loads((cache / "metadata.json").read_text())
@@ -54,6 +54,7 @@ def run(cfg):
 
     cpu_student = load_student(checkpoint, cache, device="cpu")
     results = {
+        "run_name": run_name,
         "student": student.name,
         "params_millions": round(sum(p.numel() for p in student.net.parameters()) / 1e6, 2),
         "agreement_with_teacher": float((embs * teacher).sum(axis=1).mean()),
@@ -64,6 +65,6 @@ def run(cfg):
             embs, rows["id"].to_numpy(), rows["productDisplayName"].to_numpy()),
         "cpu_ms_per_image": cpu_latency_ms(cpu_student, [images_dir / p for p in rows["path"][:55]]),
     }
-    out = REPO_ROOT / "results" / f"student_{arch}.json"
+    out = REPO_ROOT / "results" / f"student_{run_name}.json"
     out.write_text(json.dumps(results, indent=2))
     print(json.dumps(results, indent=2))
