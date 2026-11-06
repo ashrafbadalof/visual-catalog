@@ -3,10 +3,11 @@ from torch.utils.data import Dataset
 
 
 class ImageDataset(Dataset):
-    def __init__(self, paths, images_dir, transform):
+    def __init__(self, paths, images_dir, transform, targets=None):
         self.paths = list(paths)
         self.images_dir = images_dir
         self.transform = transform
+        self.targets = targets
 
     def __len__(self):
         return len(self.paths)
