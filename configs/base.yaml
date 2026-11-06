@@ -7,6 +7,7 @@ paths:
   processed_dir: processed
   cache_dir: cache/teacher
   catalog_db: catalog.db
+  checkpoints_dir: checkpoints
 
 teacher:
   arch: ViT-L-14
@@ -17,6 +18,13 @@ teacher:
     - "a photo of a {}."
     - "a product photo of a {}."
     - "a studio photo of a {}, isolated on a white background."
+
+student:
+  arch: mobilenet_v3_small
+  epochs: 5
+  batch_size: 32
+  lr: 3.0e-4
+  num_workers: 4
 
 labels:
   column: articleType

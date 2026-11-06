@@ -13,4 +13,5 @@ class ImageDataset(Dataset):
 
     def __getitem__(self, i):
         with Image.open(self.images_dir / self.paths[i]) as im:
-            return self.transform(im.convert("RGB"))
+            image = self.transform(im.convert("RGB"))
+        return image if self.targets is None else (image, self.targets[i])
