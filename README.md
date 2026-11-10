@@ -39,3 +39,26 @@ the teacher's top-1 and 87% of its Recall@10 while running ~63× faster on CPU.
 - Adding an image–image relational loss: agreement 0.876, Recall@10 50.0%, worse
   than cosine alone. Search is text→image, so it depends on absolute alignment with
   the teacher's text space, which relational losses don't constrain.
+
+## Stage 3: Classification heads
+
+Linear heads on frozen MobileNetV3-Large features, trained on teacher soft labels
+(T = 4.0), teacher hard labels, or human labels. Test split.
+
+| Training images | Top-1 soft / hard / human | ECE soft / hard |
+|---|---|---|
+| 1,000 | 83.2 / 84.3 / 88.2% | 0.066 / 0.118 |
+| all (33,713) | 84.9 / 84.5 / 93.1% | 0.054 / 0.118 |
+| Teacher | 85.7% | 0.051 |
+
+- Soft labels match hard labels on accuracy but halve calibration error, and improve
+  macro-F1 by up to 10 points when data is scarce (100 images).
+- Teacher labels plateau at ~3,000 images, below the teacher; heads trained on them
+  copy its errors (Heels recall 0.37 vs teacher 0.38).
+- Human labels (supervised, not distillation) beat the teacher from ~1,000 images and
+  fix its weak classes (Heels recall 0.86), partly by matching the test set's own
+  labelling conventions.
+- Adding 50 human labels per class to soft teacher labels gives only 86.3%: the
+  teacher's labels outweigh the corrections.
+
+Full results: `results/stage3_heads.csv`.
