@@ -8,6 +8,7 @@ paths:
   cache_dir: cache/teacher
   catalog_db: catalog.db
   checkpoints_dir: checkpoints
+  features_dir: cache/student_features
 
 teacher:
   arch: ViT-L-14
@@ -28,6 +29,14 @@ student:
   num_workers: 4
   rel_weight: 0
   rel_tau: 0.1
+
+head:
+  student_run: mnv3l_cos_e20
+  temperatures: [1.0, 2.0, 4.0]
+  budgets: [100, 300, 1000, 3000, 10000, 40000]
+  human_per_class: [10, 25, 50]
+  seeds: 3
+  steps: 2000
 
 labels:
   column: articleType
