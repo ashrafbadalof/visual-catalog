@@ -38,6 +38,13 @@ head:
   seeds: 3
   steps: 2000
 
+cascade:
+  student_run: mnv3l_cos_e20
+  head_T: 4.0
+  student_ms: 19.7
+  teacher_ms: 1240
+  threshold: 0.656
+
 labels:
   column: articleType
   min_images: 100
