@@ -1,0 +1,14 @@
+kind,encoder,device,ms
+query,student-onnx/mnv3l_cos_e20,cpu,212.0
+query,student-onnx/mnv3l_cos_e20,cpu,274.2
+query,student-onnx/mnv3l_cos_e20,cpu,322.8
+query,student-onnx/mnv3l_cos_e20,cpu,232.8
+query,student-onnx/mnv3l_cos_e20,cpu,220.3
+query,student-onnx/mnv3l_cos_e20,cpu,264.7
+query,student-onnx/mnv3l_cos_e20,cpu,215.4
+query,student-onnx/mnv3l_cos_e20,cpu,236.6
+query,student-onnx/mnv3l_cos_e20,cpu,221.7
+query,student-onnx/mnv3l_cos_e20,cpu,244.1
+tag,student-onnx/mnv3l_cos_e20,cpu,117.0
+tag,student-onnx/mnv3l_cos_e20,cpu,14.2
+tag,ViT-L-14/laion2b_s32b_b82k,cpu,1251.7

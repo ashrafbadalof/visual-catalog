@@ -9,8 +9,7 @@ def build_app(tagger):
         if image is None:
             return {}, "Upload a photo first."
         product, top3, ms = tagger.tag_and_add(image, title)
-        return top3, f"Added as product {product.id}. Tagging took {ms:.0f} ms"
-
+        return top3, f"Added as product {product.id}, tagged by **{product.encoder}** in {ms:.0f} ms"
     with gr.Blocks(title="Visual Catalog") as app:
         with gr.Tab("Search"):
             query = gr.Textbox(label="Search", placeholder="e.g. black leather handbag")

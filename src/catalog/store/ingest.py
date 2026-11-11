@@ -7,7 +7,10 @@ from catalog.config import data_path
 from catalog.eval.classification import softmax
 from catalog.store.sqlite_store import Product, SQLiteStore
 
-def run(cfg):
+from torch.utils.data import DataLoader
+from catalog.data.dataset import ImageDataset
+
+def run(cfg, encoder = None):
     processed = data_path(cfg, "processed_dir")
     cache = data_path(cfg, "cache_dir")
     db_path = data_path(cfg, "catalog_db")
@@ -19,13 +22,25 @@ def run(cfg):
 
     test = (df["split"] == "test").to_numpy()
     rows = df[test]
-    embs = np.load(cache / "image_embs.npy")[test].astype(np.float32)
+
+    if encoder is None:
+        embs = np.load(cache / "image_embs.npy")[test].astype(np.float32)
+        logits = np.load(cache / "logits.npy")[test]
+        name = meta["teacher"]
+    else:
+        loader = DataLoader(ImageDataset(rows["path"], data_path(cfg, "images_dir"), encoder.preprocess),
+                            batch_size=64, num_workers=4)
+        outputs = [encoder.encode_images(batch) for batch in loader]
+        embs = np.concatenate([e for e, _ in outputs])
+        logits = np.concatenate([l for _, l in outputs])
+        name = encoder.name
+
     embs /= np.linalg.norm(embs, axis=1, keepdims=True)
-    probs = softmax(np.load(cache / "logits.npy")[test])
+    probs = softmax(logits)
 
     products = [Product(id=int(r.id), image_path=f"{cfg['paths']['images_dir']}/{r.path}", title=r.productDisplayName,
                         category=meta["classes"][p.argmax()], confidence=float(p.max()),
-                        encoder=meta["teacher"])
+                        encoder=name)
                 for r, p in zip(rows.itertuples(), probs)]
 
     store = SQLiteStore(db_path, dim=embs.shape[1])
