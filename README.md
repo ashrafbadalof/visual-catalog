@@ -107,13 +107,15 @@ Thresholds chosen on validation; zero-shot student route.
 - Latencies come from one laptop on dataset-sized images. Large web photos add
   preprocessing time, and unfamiliar images are deferred more often than 9%.
 - One dataset; the cascade's gain over the teacher is small (0.3 points).
+- The web demo tags with the student only (no cascade), searches with the teacher's
+  int8 text tower, has a fixed read-only catalog, and downloads ~170 MB on the first visit.
 
 ## Future work
 
 - Distill the text tower too, removing the teacher from search.
 - Log deferrals and retrain the student on them to lower the deferral rate.
 - An attribute-based search benchmark ("grey wallet for women").
-- int8 quantisation of student and teacher.
+- int8 quantisation of the student and the teacher's image tower (the text tower is done).
 
 ## Reproduce
 
@@ -133,5 +135,6 @@ python scripts/run_cascade.py           # Stage 4
 python scripts/export_onnx.py
 python scripts/ingest.py --encoder student
 python scripts/run_app.py               # cascade demo
-python scripts/build_web.py             # in-browser demo -> build/web (add --push USER/SPACE to upload)
+python scripts/build_web.py             # in-browser demo -> build/web
+python scripts/build_web.py --push USER/SPACE   # upload it (after `hf auth login`)
 ```
