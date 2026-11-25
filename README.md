@@ -8,7 +8,8 @@ tagging accuracy** and **87% of its search Recall@10** at **~63× lower CPU late
 A confidence cascade that sends ~9% of images to the teacher **slightly exceeds the
 teacher's accuracy (86.0% vs 85.7%) at ~10× lower average cost**.
 
-**Live demo:**
+**Live demo:** https://huggingface.co/spaces/ashrafb04/visual-catalog (runs entirely in the browser:
+student tagging and text search, without the cascade)
 
 ## Headline results
 
@@ -97,6 +98,8 @@ Thresholds chosen on validation; zero-shot student route.
   needs confidence that *ranks* errors well, and that head copies the teacher's errors.
 - ONNX export: identical predictions (min cosine 0.9999998), 20.9 MB, 2.7 ms vs 12.8 ms
   in PyTorch (model only). Image preprocessing now costs more than the model.
+- In-browser demo: the teacher's text tower is exported to ONNX and int8-quantised
+  (125 MB). Search Recall@10 drops only from 61.1% to 60.9% (`results/web_search_check.json`).
 
 ## Limitations
 
@@ -130,4 +133,5 @@ python scripts/run_cascade.py           # Stage 4
 python scripts/export_onnx.py
 python scripts/ingest.py --encoder student
 python scripts/run_app.py               # cascade demo
+python scripts/build_web.py             # in-browser demo -> build/web (add --push USER/SPACE to upload)
 ```

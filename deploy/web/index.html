@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Visual Catalog</title>
+<style>
+  :root { --bg: #fafafa; --fg: #1a1a1a; --muted: #666; --card: #fff; --line: #ddd; --accent: #3b5bdb; }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg: #141414; --fg: #eee; --muted: #999; --card: #1f1f1f; --line: #333; --accent: #748ffc; }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--fg); font: 15px/1.5 system-ui, sans-serif; }
+  main { max-width: 980px; margin: 0 auto; padding: 24px 16px; }
+  h1 { margin: 0 0 4px; font-size: 24px; }
+  p { margin: 0 0 12px; color: var(--muted); }
+  .tabs { display: flex; gap: 8px; margin: 16px 0; }
+  .tabs button, .chip { background: var(--card); color: var(--fg); border: 1px solid var(--line);
+    border-radius: 6px; padding: 6px 14px; cursor: pointer; font: inherit; }
+  .tabs button[aria-selected="true"] { border-color: var(--accent); color: var(--accent); }
+  .row { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 8px; }
+  input[type=text], select { flex: 1 1 240px; padding: 8px 10px; font: inherit; color: var(--fg);
+    background: var(--card); border: 1px solid var(--line); border-radius: 6px; }
+  select { flex: 0 1 200px; }
+  .chip { padding: 2px 10px; font-size: 13px; }
+  #status { min-height: 1.5em; font-size: 14px; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 12px; }
+  .grid figure { margin: 0; background: var(--card); border: 1px solid var(--line); border-radius: 6px; overflow: hidden; }
+  .grid img { width: 100%; aspect-ratio: 3 / 4; object-fit: contain; background: #fff; display: block; }
+  .grid figcaption { padding: 6px 8px; font-size: 12px; }
+  .grid figcaption span { color: var(--muted); }
+  #preview { max-width: 240px; max-height: 320px; border-radius: 6px; display: none; margin: 8px 0; background: #fff; }
+  .bar { margin: 6px 0; max-width: 420px; }
+  .bar div { height: 8px; background: var(--accent); border-radius: 4px; }
+  [hidden] { display: none !important; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Visual Catalog</h1>
+  <p>Product search and tagging with a distilled CLIP model.</p>
+  <div id="status">Loading models…</div>
+
+  <div class="tabs">
+    <button data-tab="search" aria-selected="true">Search</button>
+    <button data-tab="tag" aria-selected="false">Tag a photo</button>
+  </div>
+
+  <section id="search">
+    <div class="row">
+      <input id="query" type="text" placeholder="Search products">
+      <select id="category"><option>All</option></select>
+    </div>
+    <div class="row" id="examples"></div>
+    <div class="grid" id="results"></div>
+  </section>
+
+  <section id="tag" hidden>
+    <input id="file" type="file" accept="image/*">
+    <img id="preview" alt="Uploaded photo">
+    <div id="tags"></div>
+  </section>
+</main>
+
+<script type="module">
+  const $ = (id) => document.getElementById(id);
+  const status = (text) => ($("status").textContent = text);
+
+  document.querySelectorAll(".tabs button").forEach((b) => b.onclick = () => {
+    document.querySelectorAll(".tabs button").forEach((o) => o.setAttribute("aria-selected", o === b));
+    $("search").hidden = b.dataset.tab !== "search";
+    $("tag").hidden = b.dataset.tab !== "tag";
+  });
+
+  // Inputs work right away; anything done before the models arrive waits for them.
+  const lib = import("./app.js");
+  const ready = lib.then((m) => m.load());
+  ready.then((app) => {
+    app.classes.forEach((c) => $("category").add(new Option(c)));
+    status("Ready.");
+  }, (e) => status(`Could not load the models: ${e.message}`));
+
+  async function runSearch() {
+    const query = $("query").value.trim();
+    if (!query) return;
+    const [{ search }, app] = await Promise.all([lib, ready]);
+    const start = performance.now();
+    const hits = await search(app, query, $("category").value);
+    status(`${(performance.now() - start).toFixed(0)} ms`);
+    $("results").replaceChildren(...hits.map((h) => {
+      const fig = document.createElement("figure");
+      fig.innerHTML = `<img loading="lazy"><figcaption></figcaption>`;
+      fig.querySelector("img").src = h.image;
+      fig.querySelector("img").alt = h.title ?? h.category;
+      fig.querySelector("figcaption").innerHTML = `<span>${h.category} · ${h.score.toFixed(2)}</span><br>`;
+      fig.querySelector("figcaption").append(h.title ?? "");
+      return fig;
+    }));
+  }
+  $("query").onkeydown = (e) => { if (e.key === "Enter") runSearch(); };
+  $("category").onchange = runSearch;
+  ["black leather handbag", "white sneakers", "red dress for women", "men's analog watch"].forEach((q) => {
+    const chip = Object.assign(document.createElement("button"), { className: "chip", textContent: q });
+    chip.onclick = () => { $("query").value = q; runSearch(); };
+    $("examples").append(chip);
+  });
+
+  $("file").onchange = () => {
+    const file = $("file").files[0];
+    if (!file) return;
+    $("preview").src = URL.createObjectURL(file);
+    $("preview").style.display = "block";
+  };
+  $("preview").onload = async () => {
+    const [{ tag }, app] = await Promise.all([lib, ready]);
+    const start = performance.now();
+    const top = await tag(app, $("preview"));
+    status(`${(performance.now() - start).toFixed(0)} ms`);
+    $("tags").innerHTML = top.map((t) =>
+      `<div class="bar">${t.name} · ${(t.prob * 100).toFixed(1)}%<div style="width:${t.prob * 100}%"></div></div>`).join("");
+  };
+</script>
+</body>
+</html>

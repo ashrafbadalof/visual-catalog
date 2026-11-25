@@ -25,7 +25,7 @@ dependencies = [
 [project.optional-dependencies]
 app = ["gradio"]
 dev = ["pytest"]
-deploy = ["onnx", "onnxruntime"]
+deploy = ["onnx", "onnxruntime", "huggingface_hub"]
 
 [tool.setuptools.packages.find]
 where = ["src"]

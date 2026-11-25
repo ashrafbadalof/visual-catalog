@@ -1,0 +1,13 @@
+{
+  "original": {
+    "exact_recall@1": 0.18,
+    "exact_recall@10": 0.6112,
+    "exact_mrr": 0.3168
+  },
+  "int8": {
+    "exact_recall@1": 0.178,
+    "exact_recall@10": 0.6091,
+    "exact_mrr": 0.3156
+  },
+  "text_model_mb": 125.0
+}
